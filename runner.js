@@ -4,8 +4,6 @@ const path = require('path');
 const util = require('util');
 const puppeteer = require('puppeteer');
 
-const url = path.resolve('example-page.html');
-
 function initMocha() {
 
     window.runMochaHeadlessChrome = function() {
@@ -34,41 +32,52 @@ function initMocha() {
 }
 
 
-module.exports = async () => {
-    const browser = await puppeteer.launch({ ignoreHTTPSErrors: true, headless: true });
-    const page = await browser.newPage();
+module.exports = async (filePath) => {
+    const url = path.resolve(filePath);
 
-    page.on('console', (...args) => {
-        //console.log('>>>>>>>>>>>>>>>>>>begin', JSON.stringify(args));
+    try {
 
-        let isStdout = args[0] === 'stdout:';
-        isStdout && (args = args.slice(1));
+        const browser = await puppeteer.launch({
+            ignoreHTTPSErrors: true,
+            headless: true
+        });
+        const page = await browser.newPage();
 
-        let msg = util.format(...args);
-        !isStdout && (msg += '\n');
-        process.stdout.write(msg);
-    });
+        page.on('console', (...args) => {
+            //console.log('>>>>>>>>>>>>>>>>>>begin', JSON.stringify(args));
 
-    page.on('dialog', async dialog => {
-        await dialog.dismiss();
-    });
+            let isStdout = args[0] === 'stdout:';
+            isStdout && (args = args.slice(1));
 
-    page.on('pageerror', async err => {
-        console.error(err);
-    });
+            let msg = util.format(...args);
+            !isStdout && (msg += '\n');
+            process.stdout.write(msg);
+        });
 
-    // page.on('request', request => {
-    //   if (/\.(png|jpg|jpeg|gif|webp)$/i.test(request.url))
-    //     request.abort();
-    //   else
-    //     request.continue();
-    // });
+        page.on('dialog', async dialog => {
+            await dialog.dismiss();
+        });
 
-    await page.evaluateOnNewDocument(initMocha);
+        page.on('pageerror', async err => {
+            console.error(err);
+        });
 
-    await page.goto(`file://${url}`);
-    await page.waitForFunction(() => window.testsCompleted);
+        // page.on('request', request => {
+        //   if (/\.(png|jpg|jpeg|gif|webp)$/i.test(request.url))
+        //     request.abort();
+        //   else
+        //     request.continue();
+        // });
 
-    process.stdout.write('\n');
-    browser.close();
+        await page.evaluateOnNewDocument(initMocha);
+
+        await page.goto(`file://${url}`);
+        await page.waitForFunction(() => window.testsCompleted);
+
+        process.stdout.write('\n');
+        browser.close();
+    } catch (err) {
+        console.log(err);
+        process.exit(1);
+    }
 };
