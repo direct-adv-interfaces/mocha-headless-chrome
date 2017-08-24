@@ -2,9 +2,10 @@
   "name": "mocha-headless-chrome",
   "version": "0.1.0",
   "description": "Run client-side mocha tests in the command line through headless Chrome",
-  "main": "index.js",
+  "main": "runner.js",
+  "bin": "./bin/start",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node cli"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
   "dependencies": {
+    "minimist": "^1.2.0",
     "puppeteer": "^0.9.0"
   },
   "devDependencies": {

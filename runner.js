@@ -28,13 +28,13 @@ function initMocha() {
         Mocha.reporters.Base.symbols.comma = ',';
         Mocha.reporters.Base.symbols.bang = '!';
 
-        mocha.setup({ reporter: Mocha.reporters.dot });
+        mocha.setup({ reporter: Mocha.reporters.list });
         mocha.run().on('end', () => window.testsCompleted = true);
     };
 }
 
 
-(async () => {
+module.exports = async () => {
     const browser = await puppeteer.launch({ ignoreHTTPSErrors: true, headless: true });
     const page = await browser.newPage();
 
@@ -71,4 +71,4 @@ function initMocha() {
 
     process.stdout.write('\n');
     browser.close();
-})();
+};
