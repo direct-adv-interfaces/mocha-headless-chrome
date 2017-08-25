@@ -13,7 +13,11 @@
         <script src="example-tests.js"></script>
 
         <script>
-            window.runMochaHeadlessChrome && window.runMochaHeadlessChrome();
+            if (window.runMochaHeadlessChrome) {
+                window.runMochaHeadlessChrome();
+            } else {
+                mocha.run();
+            }
         </script>
     </body>
 </html>
