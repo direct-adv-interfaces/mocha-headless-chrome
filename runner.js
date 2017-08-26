@@ -12,8 +12,6 @@ function initMocha(reporter) {
     })(console);
 
     window.runMochaHeadlessChrome = function() {
-
-
         // var MARK = '#mocha#';
         //
         // function MyReporter(runner) {
@@ -36,12 +34,11 @@ function initMocha(reporter) {
     };
 }
 
-module.exports = async (filePath, reporter) => {
-    const url = path.resolve(filePath);
+module.exports = async ({ file, reporter, timeout }) => {
+    const url = path.resolve(file);
     const log = [];
-    
-    try {
 
+    try {
         const browser = await puppeteer.launch({
             ignoreHTTPSErrors: true,
             headless: true
@@ -82,14 +79,14 @@ module.exports = async (filePath, reporter) => {
         await page.evaluateOnNewDocument(initMocha, reporter);
 
         await page.goto(`file://${url}`);
-        await page.waitForFunction(() => window.testsCompleted, { timeout: 60000 });
+        await page.waitForFunction(() => window.testsCompleted, { timeout: timeout });
 
         process.stdout.write('\n');
         browser.close();
 
         //log.forEach(msg => console.log(`${msg.json} = ${msg.del} == ${msg.begin}`));
     } catch (err) {
-        console.log(err);
+        console.error(err);
         process.exit(1);
     }
 };

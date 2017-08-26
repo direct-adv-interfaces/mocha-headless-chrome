@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
   "dependencies": {
-    "minimist": "^1.2.0",
+    "args": "^3.0.4",
     "puppeteer": "^0.9.0"
   },
   "devDependencies": {
