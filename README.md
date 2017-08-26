@@ -1,6 +1,6 @@
 # mocha-headless-chrome
 
-This is the tool which runs client-side [mocha](https://github.com/mochajs/mocha) tests in the command line through [headless Chrome](https://github.com/GoogleChrome/puppeteer).
+This is the tool which runs client-side [mocha](https://github.com/mochajs/mocha) tests in the command line through headless Chrome ([puppeteer](https://github.com/GoogleChrome/puppeteer) is used).
 
 *Note: Still under dev. Nothing is really configurable right now.*
 
