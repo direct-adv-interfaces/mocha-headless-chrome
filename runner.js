@@ -26,12 +26,15 @@ function initMocha(reporter) {
         // //mocha.setup({ reporter: MyReporter });
 
         Mocha.reporters.Base.useColors = true;
+        Mocha.process.browser = false;
+        Mocha.process.stdout = {
+            write: data => console.log('stdout:', data)
+        };
 
         mocha.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.spec });
         mocha.run().on('end', () => window.testsCompleted = true);
     };
 }
-
 
 module.exports = async (filePath, reporter) => {
     const url = path.resolve(filePath);
@@ -79,12 +82,12 @@ module.exports = async (filePath, reporter) => {
         await page.evaluateOnNewDocument(initMocha, reporter);
 
         await page.goto(`file://${url}`);
-        await page.waitForFunction(() => window.testsCompleted);
+        await page.waitForFunction(() => window.testsCompleted, { timeout: 60000 });
 
         process.stdout.write('\n');
         browser.close();
 
-        log.forEach(msg => console.log(`${msg.json} = ${msg.del} == ${msg.begin}`));
+        //log.forEach(msg => console.log(`${msg.json} = ${msg.del} == ${msg.begin}`));
     } catch (err) {
         console.log(err);
         process.exit(1);
