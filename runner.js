@@ -6,7 +6,14 @@ const puppeteer = require('puppeteer');
 
 function initMocha(reporter) {
 
+    console.log = (console => {
+        const log = console.log.bind(console);
+        return (...args) => args.length ? log(...args) : log('');
+    })(console);
+
     window.runMochaHeadlessChrome = function() {
+
+
         // var MARK = '#mocha#';
         //
         // function MyReporter(runner) {
@@ -20,7 +27,7 @@ function initMocha(reporter) {
 
         Mocha.reporters.Base.useColors = true;
 
-        mocha.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.dot });
+        mocha.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.spec });
         mocha.run().on('end', () => window.testsCompleted = true);
     };
 }
@@ -28,6 +35,7 @@ function initMocha(reporter) {
 
 module.exports = async (filePath, reporter) => {
     const url = path.resolve(filePath);
+    const log = [];
     
     try {
 
@@ -38,7 +46,13 @@ module.exports = async (filePath, reporter) => {
         const page = await browser.newPage();
 
         page.on('console', (...args) => {
-            //process.stdout.write('ARGS: ' + JSON.stringify(args));
+            // save console.log arguments
+            let json = JSON.stringify(args);
+            let del = args[1] === "\u001b[2K";
+            let begin = args[1] === "\u001b[0G";
+            log.push({ json, del, begin });
+
+            // process stdout stub
             let isStdout = args[0] === 'stdout:';
             isStdout && (args = args.slice(1));
 
@@ -69,6 +83,8 @@ module.exports = async (filePath, reporter) => {
 
         process.stdout.write('\n');
         browser.close();
+
+        log.forEach(msg => console.log(`${msg.json} = ${msg.del} == ${msg.begin}`));
     } catch (err) {
         console.log(err);
         process.exit(1);

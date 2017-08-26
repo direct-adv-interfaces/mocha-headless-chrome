@@ -16,7 +16,7 @@ function delay() {
 describe('Array', function() {
     describe('#indexOf()', function() {
 
-        for (var i = 0; i < 50; i++) {
+        for (var i = 0; i < 15; i++) {
             if (i % 5 === 4) {
                 it(`(${i}) should fail`, function() {
                     delay();
