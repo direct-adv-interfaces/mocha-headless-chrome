@@ -4,7 +4,7 @@ const path = require('path');
 const util = require('util');
 const puppeteer = require('puppeteer');
 
-function initMocha() {
+function initMocha(reporter) {
 
     window.runMochaHeadlessChrome = function() {
         // var MARK = '#mocha#';
@@ -19,22 +19,16 @@ function initMocha() {
         // //mocha.setup({ reporter: MyReporter });
 
         Mocha.reporters.Base.useColors = true;
-        Mocha.reporters.Base.symbols.dot = '.';
-        Mocha.reporters.Base.symbols.ok = '✓';
-        Mocha.reporters.Base.symbols.err = '✖';
-        Mocha.reporters.Base.symbols.dot = '․';
-        Mocha.reporters.Base.symbols.comma = ',';
-        Mocha.reporters.Base.symbols.bang = '!';
 
-        mocha.setup({ reporter: Mocha.reporters.list });
+        mocha.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.dot });
         mocha.run().on('end', () => window.testsCompleted = true);
     };
 }
 
 
-module.exports = async (filePath) => {
+module.exports = async (filePath, reporter) => {
     const url = path.resolve(filePath);
-
+    
     try {
 
         const browser = await puppeteer.launch({
@@ -44,8 +38,7 @@ module.exports = async (filePath) => {
         const page = await browser.newPage();
 
         page.on('console', (...args) => {
-            //console.log('>>>>>>>>>>>>>>>>>>begin', JSON.stringify(args));
-
+            //process.stdout.write('ARGS: ' + JSON.stringify(args));
             let isStdout = args[0] === 'stdout:';
             isStdout && (args = args.slice(1));
 
@@ -69,7 +62,7 @@ module.exports = async (filePath) => {
         //     request.continue();
         // });
 
-        await page.evaluateOnNewDocument(initMocha);
+        await page.evaluateOnNewDocument(initMocha, reporter);
 
         await page.goto(`file://${url}`);
         await page.waitForFunction(() => window.testsCompleted);

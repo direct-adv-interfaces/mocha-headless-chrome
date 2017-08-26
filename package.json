@@ -5,7 +5,7 @@
   "main": "runner.js",
   "bin": "./bin/start",
   "scripts": {
-    "start": "node cli"
+    "start": "node cli -f example-page.html"
   },
   "repository": {
     "type": "git",

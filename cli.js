@@ -7,4 +7,4 @@ var argv = parseArgs(process.argv.slice(2));
 
 if (!argv.f) throw new Error('File (-f) is required.');
 
-runner(argv.f);
+runner(argv.f, argv.r);

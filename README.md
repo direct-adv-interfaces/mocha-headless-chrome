@@ -16,6 +16,8 @@ Prepare the test page using [the example](example-page.html). Run `window.runMoc
 
 Then run `mocha-headless-chrome` CLI and specify your test page path using `-f` parameter.
 
+Optionally you can specify the reporter name using `-r` parameter. All mocha reporters are supported. But some reporters which use ascii escape chars for the cursor manipulation may works incorrect.  
+
 ```
-mocha-headless-chrome -f test-page.html
+mocha-headless-chrome -f test-page.html -r nyan
 ```
