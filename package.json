@@ -1,6 +1,6 @@
 {
   "name": "mocha-headless-chrome",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Run client-side mocha tests in the command line through headless Chrome",
   "main": "runner.js",
   "bin": "./bin/start",
