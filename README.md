@@ -2,22 +2,33 @@
 
 This is the tool which runs client-side [mocha](https://github.com/mochajs/mocha) tests in the command line through headless Chrome ([puppeteer](https://github.com/GoogleChrome/puppeteer) is used).
 
-*Note: Still under dev. Nothing is really configurable right now.*
+All mocha reporters are supported (including third-party reporters).
 
-## Install
+## Getting Started
+
+First you'll need to install `mocha-headless-chrome`:
 
 ```
 npm i mocha-headless-chrome
 ```
 
-## Run 
+Then prepare the test page (see [the example](example-page.html)). 
 
-Prepare the test page using [the example](example-page.html). Run `window.runMochaHeadlessChrome()` function instead `mocha.run()` [if it is available](example-page.html#L16-L20).
+- Add the `<meta charset="utf-8">` meta tag. Otherwise browser may use another encoding and test results will be shown incorrectly.
+- Include mocha js & styles into the page. Also add the container for mocha info `<div id="mocha"></div>`.
+- Include your testable code and tests. 
+- Use `window.runMochaHeadlessChrome()` function instead `mocha.run()` [if it is available](example-page.html#L16-L20).
 
 Then run `mocha-headless-chrome` CLI and specify your test page path using `-f` parameter.
 
-Optionally you can specify the reporter name using `-r` parameter. All mocha reporters are supported.  
+```
+mocha-headless-chrome -f test-page.html
+```
 
-```
-mocha-headless-chrome -f test-page.html -r nyan
-```
+## Options
+
+- **-f, --file** - Path to the page which contains tests (required)
+- **-r, --reporter [value]** - Mocha reporter name (defaults to "spec")
+- **-t, --timeout <n>** - Timeout in ms (defaults to 60000)
+- **-h, --help** - Output usage information
+- **-v, --version** - Output the version number
