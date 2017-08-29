@@ -7,6 +7,8 @@ args.option('file', 'Path to the page which contains tests (required)')
     .option('reporter', 'Mocha reporter name', 'spec')
     .option('timeout', 'Timeout in ms', 60000, parseInt)
     .option('help', 'Output usage information', undefined, Boolean)
+    .option('width', 'Viewport width', 800, parseInt)
+    .option('height', 'Viewport height', 600, parseInt)
     .example('mocha-headless-chrome -f test.html', 'Run test on the "test.html" page')
     .example('mocha-headless-chrome -f test.html -r nyan', 'Output test result using "nyan" reporter');
 

@@ -34,7 +34,7 @@ function initMocha(reporter) {
     };
 }
 
-module.exports = async ({ file, reporter, timeout }) => {
+module.exports = async ({ file, reporter, timeout, width, height }) => {
     const url = path.resolve(file);
     const log = [];
 
@@ -43,7 +43,15 @@ module.exports = async ({ file, reporter, timeout }) => {
             ignoreHTTPSErrors: true,
             headless: true
         });
+        
         const page = await browser.newPage();
+
+        if (width || height) {
+            let viewport = page.viewport();
+            width && (viewport.width = width);
+            height && (viewport.height = height);
+            await page.setViewport(viewport);
+        }
 
         page.on('console', (...args) => {
             // save console.log arguments

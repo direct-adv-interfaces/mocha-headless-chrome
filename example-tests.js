@@ -14,9 +14,21 @@ function delay() {
 }
 
 describe('Array', function() {
+
+    describe('viewport', function() {
+
+        it('width should be equal to 801', function() {
+            assert.equal(801, window.innerWidth);
+        });
+
+        it('height should be equal to 501', function() {
+            assert.equal(501, window.innerHeight);
+        });
+    });
+
     describe('#indexOf()', function() {
 
-        for (var i = 0; i < 60; i++) {
+        for (let i = 0; i < 5; i++) {
             if (i % 5 === 4) {
                 it(`(${i}) should fail`, function() {
                     delay();

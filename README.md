@@ -29,6 +29,8 @@ mocha-headless-chrome -f test-page.html
 
 - **-f, --file** - Path to the page which contains tests (required)
 - **-r, --reporter [value]** - Mocha reporter name (defaults to "spec")
+- **-w, --width <n>** - Viewport width (defaults to 800)
+- **-H, --height <n>** - Viewport height (defaults to 600)
 - **-t, --timeout <n>** - Timeout in ms (defaults to 60000)
 - **-h, --help** - Output usage information
 - **-v, --version** - Output the version number
