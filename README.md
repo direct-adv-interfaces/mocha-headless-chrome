@@ -4,6 +4,8 @@ This is the tool which runs client-side [mocha](https://github.com/mochajs/mocha
 
 All mocha reporters are supported (including third-party reporters).
 
+Node 6.4.0+ is supported.
+
 ## Getting Started
 
 First you'll need to install `mocha-headless-chrome`:
