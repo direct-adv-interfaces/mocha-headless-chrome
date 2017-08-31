@@ -34,67 +34,54 @@ function initMocha(reporter) {
     };
 }
 
-module.exports = async ({ file, reporter, timeout, width, height }) => {
+function configureViewport(width, height, page) {
+    if (!width && !height) return page;
+
+    let viewport = page.viewport();
+    width && (viewport.width = width);
+    height && (viewport.height = height);
+    
+    return page.setViewport(viewport).then(() => page);
+}
+
+function handleConsole(...args) {
+    // process stdout stub
+    let isStdout = args[0] === 'stdout:';
+    isStdout && (args = args.slice(1));
+
+    let msg = util.format(...args);
+    !isStdout && (msg += '\n');
+    process.stdout.write(msg);
+}
+
+function onError(err) {
+    console.error(err);
+    process.exit(1);
+}
+
+module.exports = function({ file, reporter, timeout, width, height }) {
     const url = path.resolve(file);
-    const log = [];
+    const options = {
+        ignoreHTTPSErrors: true,
+        headless: true
+    };
 
-    try {
-        const browser = await puppeteer.launch({
-            ignoreHTTPSErrors: true,
-            headless: true
-        });
-        
-        const page = await browser.newPage();
+    puppeteer
+        .launch(options)
+        .then(browser => browser.newPage()
+            .then(configureViewport.bind(this, width, height))
+            .then(page => {
+                page.on('console', handleConsole);
+                page.on('dialog', dialog => dialog.dismiss());
+                page.on('pageerror', err => console.error(err));
 
-        if (width || height) {
-            let viewport = page.viewport();
-            width && (viewport.width = width);
-            height && (viewport.height = height);
-            await page.setViewport(viewport);
-        }
-
-        page.on('console', (...args) => {
-            // save console.log arguments
-            let json = JSON.stringify(args);
-            let del = args[1] === "\u001b[2K";
-            let begin = args[1] === "\u001b[0G";
-            log.push({ json, del, begin });
-
-            // process stdout stub
-            let isStdout = args[0] === 'stdout:';
-            isStdout && (args = args.slice(1));
-
-            let msg = util.format(...args);
-            !isStdout && (msg += '\n');
-            process.stdout.write(msg);
-        });
-
-        page.on('dialog', async dialog => {
-            await dialog.dismiss();
-        });
-
-        page.on('pageerror', async err => {
-            console.error(err);
-        });
-
-        // page.on('request', request => {
-        //   if (/\.(png|jpg|jpeg|gif|webp)$/i.test(request.url))
-        //     request.abort();
-        //   else
-        //     request.continue();
-        // });
-
-        await page.evaluateOnNewDocument(initMocha, reporter);
-
-        await page.goto(`file://${url}`);
-        await page.waitForFunction(() => window.testsCompleted, { timeout: timeout });
-
-        process.stdout.write('\n');
-        browser.close();
-
-        //log.forEach(msg => console.log(`${msg.json} = ${msg.del} == ${msg.begin}`));
-    } catch (err) {
-        console.error(err);
-        process.exit(1);
-    }
+                return page.evaluateOnNewDocument(initMocha, reporter)
+                    .then(() => page.goto(`file://${url}`))
+                    .then(() => page.waitForFunction(() => window.testsCompleted, { timeout: timeout }))
+                    .then(() => {
+                        process.stdout.write('\n');
+                        browser.close();
+                    });
+            }))
+        .catch(onError);
 };
