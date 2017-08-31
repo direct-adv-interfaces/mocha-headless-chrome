@@ -1,36 +1,36 @@
 {
-    "name": "mocha-headless-chrome",
-    "version": "1.1.0",
-    "description": "Run client-side mocha tests in the command line through headless Chrome",
-    "main": "runner.js",
-    "bin": "./bin/start",
-    "engines": {
-        "node": ">=6.4.0"
-    },
-    "scripts": {
-        "start": "node cli -f example-page.html"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/direct-adv-interfaces/mocha-headless-chrome.git"
-    },
-    "keywords": [
-        "mocha",
-        "tests",
-        "headless-chrome"
-    ],
-    "author": "dima117a@gmail.com",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/direct-adv-interfaces/mocha-headless-chrome/issues"
-    },
-    "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
-    "dependencies": {
-        "args": "^3.0.4",
-        "puppeteer": "^0.10.1"
-    },
-    "devDependencies": {
-        "chai": "^4.1.1",
-        "mocha": "^3.5.0"
-    }
+  "name": "mocha-headless-chrome",
+  "version": "1.1.1",
+  "description": "Run client-side mocha tests in the command line through headless Chrome",
+  "main": "runner.js",
+  "bin": "./bin/start",
+  "engines": {
+    "node": ">=6.4.0"
+  },
+  "scripts": {
+    "start": "node cli -f example-page.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/direct-adv-interfaces/mocha-headless-chrome.git"
+  },
+  "keywords": [
+    "mocha",
+    "tests",
+    "headless-chrome"
+  ],
+  "author": "dima117a@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/direct-adv-interfaces/mocha-headless-chrome/issues"
+  },
+  "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
+  "dependencies": {
+    "args": "^3.0.4",
+    "puppeteer": "^0.10.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.1",
+    "mocha": "^3.5.0"
+  }
 }
