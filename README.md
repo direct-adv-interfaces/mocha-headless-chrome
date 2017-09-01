@@ -1,5 +1,10 @@
 # mocha-headless-chrome
 
+[![npm](https://img.shields.io/npm/v/mocha-headless-chrome.svg)](https://www.npmjs.com/package/mocha-headless-chrome)
+[![license](https://img.shields.io/npm/l/mocha-headless-chrome.svg)](http://spdx.org/licenses/MIT.html)
+[![dependency status](https://img.shields.io/david/direct-adv-interfaces/mocha-headless-chrome.svg)]()
+[![dev dependency status](https://img.shields.io/david/dev/direct-adv-interfaces/mocha-headless-chrome.svg)]()
+
 This is the tool which runs client-side [mocha](https://github.com/mochajs/mocha) tests in the command line through headless Chrome ([puppeteer](https://github.com/GoogleChrome/puppeteer) is used).
 
 All mocha reporters are supported (including third-party reporters).
@@ -16,10 +21,7 @@ npm i mocha-headless-chrome
 
 Then prepare the test page (see [the example](example-page.html)). 
 
-- Add the `<meta charset="utf-8">` meta tag. Otherwise browser may use another encoding and test results will be shown incorrectly.
-- Include mocha js & styles into the page. Also add the container for mocha info `<div id="mocha"></div>`.
-- Include your testable code and tests. 
-- Use `window.runMochaHeadlessChrome()` function instead `mocha.run()` [if it is available](example-page.html#L16-L20).
+*Note. It is necessary to add the `<meta charset="utf-8">` tag. Otherwise browser may use another encoding and test results will be shown incorrectly.*
 
 Then run `mocha-headless-chrome` CLI and specify your test page path using `-f` parameter.
 
