@@ -9,16 +9,8 @@
         <div id="mocha"></div>
         <script src="node_modules/mocha/mocha.js"></script>
         <script src="node_modules/chai/chai.js"></script>
-        <script>mocha.setup('bdd')</script>
-
+        <script>mocha.setup('bdd');</script>
         <script src="example-tests.js"></script>
-
-        <script>
-            if (window.runMochaHeadlessChrome) {
-                window.runMochaHeadlessChrome();
-            } else {
-                mocha.run();
-            }
-        </script>
+        <script>mocha.run();</script>
     </body>
 </html>

@@ -11,27 +11,43 @@ function initMocha(reporter) {
         return (...args) => args.length ? log(...args) : log('');
     })(console);
 
-    window.runMochaHeadlessChrome = function() {
-        // var MARK = '#mocha#';
-        //
-        // function MyReporter(runner) {
-        //     Mocha.reporters.Base.call(this, runner);
-        //     runner.on('pass', test => console.log(MARK, 'pass', test));
-        //     runner.on('fail', (test, err) => console.log(MARK, 'fail', test, err));
-        //     runner.on('end', test => console.log(MARK, 'end'));
-        // }
-        //
-        // //mocha.setup({ reporter: MyReporter });
+    function shimMochaInstance(m) {
 
-        Mocha.reporters.Base.useColors = true;
-        Mocha.process.browser = false;
-        Mocha.process.stdout = {
-            write: data => console.log('stdout:', data)
-        };
+        m.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.dot });
 
-        mocha.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.spec });
-        mocha.run().on('end', () => window.testsCompleted = true);
-    };
+        let run = m.run.bind(m);
+        m.run = () => run().on('end', () => window.testsCompleted = true);
+    }
+
+    function shimMochaProcess(M) {
+        // Mocha needs a process.stdout.write in order to change the cursor position.
+        !M.process && (M.process = {});
+        !M.process.stdout && (M.process.stdout = {});
+
+        M.process.browser = false;
+        M.process.stdout.write = data => console.log('stdout:', data);
+        M.reporters.Base.useColors = true;
+    }
+
+    Object.defineProperty(window, 'mocha', {
+        get: function() { return undefined },
+        set: function(m) {
+            shimMochaInstance(m)
+            delete window.mocha
+            window.mocha = m
+        },
+        configurable: true
+    })
+
+    Object.defineProperty(window, 'Mocha', {
+        get: function() { return undefined },
+        set: function(m) {
+            delete window.Mocha;
+            window.Mocha = m;
+            shimMochaProcess(m)
+        },
+        configurable: true
+    });
 }
 
 function configureViewport(width, height, page) {
@@ -40,7 +56,7 @@ function configureViewport(width, height, page) {
     let viewport = page.viewport();
     width && (viewport.width = width);
     height && (viewport.height = height);
-    
+
     return page.setViewport(viewport).then(() => page);
 }
 
