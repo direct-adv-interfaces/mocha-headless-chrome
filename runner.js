@@ -13,7 +13,7 @@ function initMocha(reporter) {
 
     function shimMochaInstance(m) {
 
-        m.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.dot });
+        m.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.spec });
 
         const run = m.run.bind(m);
 
@@ -127,6 +127,7 @@ module.exports = function ({ file, reporter, timeout, width, height, args }) {
         }
 
         args = [].concat(args || []).map(arg => '--' + arg);
+        !timeout && (timeout = 60000);
 
         const url = path.resolve(file);
 
