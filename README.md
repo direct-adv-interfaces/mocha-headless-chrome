@@ -55,7 +55,7 @@ Output test results using "nyan" reporter:
 $ mocha-headless-chrome -f test.html -r nyan
 ```
 
-Pass the Chrome arguments:
+Pass the Chrome **--no-sandbox** and **--disable-setuid-sandbox** arguments:
 
 ```
 $ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
@@ -67,6 +67,7 @@ You can use mocha-headless-chrome programmatically. Just require the *mocha-head
 
 ```js
 const runner = require('mocha-headless-chrome');
+
 const options = {
     file: 'test.html',    // test page path 
     reporter: 'dot',      // mocha reporter name 
@@ -75,7 +76,6 @@ const options = {
     timeout: 120000,      // timeout in ms
     args: ['no-sandbox']  // chrome arguments
 };
-
 
 runner(options)
     .then(result => {
