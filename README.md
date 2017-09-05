@@ -33,6 +33,7 @@ mocha-headless-chrome -f test-page.html
 
 - **-f, --file** - Path to the page which contains tests (required)
 - **-r, --reporter** - Mocha reporter name (defaults to "spec")
+- **-o, --out** - Path to the file where test result will be saved
 - **-a, --args**  Chrome arguments ('--' prefix will be added)
 - **-w, --width** - Viewport width
 - **-H, --height** - Viewport height
@@ -59,3 +60,28 @@ Pass the Chrome arguments:
 ```
 $ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
 ```
+
+## Programmatically usage
+
+You can use mocha-headless-chrome programmatically. Just require the *mocha-headless-chrome* node module and pass proper parameters into it. Function result is a Promise.
+
+```js
+const runner = require('mocha-headless-chrome');
+const options = {
+    file: 'test.html',    // test page path 
+    reporter: 'dot',      // mocha reporter name 
+    width: 800,           // viewport width
+    height: 600,          // viewport height
+    timeout: 120000,      // timeout in ms
+    args: ['no-sandbox']  // chrome arguments
+};
+
+
+runner(options)
+    .then(result => {
+        let json = JSON.stringify(result);
+        console.log(json);
+    });
+```
+ 
+

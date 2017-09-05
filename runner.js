@@ -119,37 +119,42 @@ function onError(err) {
 }
 
 module.exports = function ({ file, reporter, timeout, width, height, args }) {
+    return new Promise(resolve => {
 
-    // validate options
-    !file && onError('ERROR: Test page path is required.');
-    
-    args = [].concat(args || []).map(arg => '--' + arg);
-    
-    const url = path.resolve(file);
+        // validate options
+        if (!file) {
+            throw new Error('Test page path is required.');
+        }
 
-    const options = {
-        ignoreHTTPSErrors: true,
-        headless: true,
-        args
-    };
+        args = [].concat(args || []).map(arg => '--' + arg);
 
-    return puppeteer
-        .launch(options)
-        .then(browser => browser.newPage()
-            .then(configureViewport.bind(this, width, height))
-            .then(page => {
-                page.on('console', handleConsole);
-                page.on('dialog', dialog => dialog.dismiss());
-                page.on('pageerror', err => console.error(err));
+        const url = path.resolve(file);
 
-                return page.evaluateOnNewDocument(initMocha, reporter)
-                    .then(() => page.goto(`file://${url}`))
-                    .then(() => page.waitForFunction(() => window.__mochaResult__, { timeout: timeout }))
-                    .then(() => page.evaluate(() => window.__mochaResult__))
-                    .then(obj => {
-                        browser.close();
-                        return obj;
-                    });
-            }))
-        .catch(onError);
+        const options = {
+            ignoreHTTPSErrors: true,
+            headless: true,
+            args
+        };
+
+        const result = puppeteer
+            .launch(options)
+            .then(browser => browser.newPage()
+                .then(configureViewport.bind(this, width, height))
+                .then(page => {
+                    page.on('console', handleConsole);
+                    page.on('dialog', dialog => dialog.dismiss());
+                    page.on('pageerror', err => console.error(err));
+
+                    return page.evaluateOnNewDocument(initMocha, reporter)
+                        .then(() => page.goto(`file://${url}`))
+                        .then(() => page.waitForFunction(() => window.__mochaResult__, { timeout: timeout }))
+                        .then(() => page.evaluate(() => window.__mochaResult__))
+                        .then(obj => {
+                            browser.close();
+                            return obj;
+                        });
+                }));
+
+        resolve(result);
+    });
 };

@@ -25,4 +25,9 @@ if (cfg.help) {
     args.showHelp();
 }
 
-runner(cfg).then(obj => cfg.out && fs.writeFileSync(cfg.out, JSON.stringify(obj)));
+runner(cfg)
+    .then(obj => cfg.out && fs.writeFileSync(cfg.out, JSON.stringify(obj)))
+    .catch(err => {
+        console.error(err);
+        process.exit(1);
+    })
