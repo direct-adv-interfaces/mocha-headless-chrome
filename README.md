@@ -13,7 +13,7 @@ Node 6.4.0+ is supported.
 
 ## Getting Started
 
-First you'll need to install `mocha-headless-chrome`:
+First you'll need to install [mocha-headless-chrome](https://www.npmjs.com/package/mocha-headless-chrome):
 
 ```
 npm i mocha-headless-chrome
@@ -21,9 +21,9 @@ npm i mocha-headless-chrome
 
 Then prepare the test page (see [the example](example-page.html)). 
 
-*Note. It is necessary to add the `<meta charset="utf-8">` tag. Otherwise browser may use another encoding and test results will be shown incorrectly.*
+*Note. It is necessary to add the **<meta charset="utf-8">** tag. Otherwise browser may use another encoding and test results will be shown incorrectly.*
 
-Then run `mocha-headless-chrome` CLI and specify your test page path using `-f` parameter.
+Then run the CLI and specify your test page path using **-f** parameter.
 
 ```
 mocha-headless-chrome -f test-page.html
@@ -32,9 +32,31 @@ mocha-headless-chrome -f test-page.html
 ## Options
 
 - **-f, --file** - Path to the page which contains tests (required)
-- **-r, --reporter [value]** - Mocha reporter name (defaults to "spec")
-- **-w, --width <n>** - Viewport width (defaults to 800)
-- **-H, --height <n>** - Viewport height (defaults to 600)
-- **-t, --timeout <n>** - Timeout in ms (defaults to 60000)
+- **-r, --reporter** - Mocha reporter name (defaults to "spec")
+- **-R, --result** - Name of the global variable which used as result of the tests
+- **-a, --args**  Chrome arguments ('--' prefix will be added)
+- **-w, --width** - Viewport width
+- **-H, --height** - Viewport height
+- **-t, --timeout** - Timeout in ms (defaults to 60000)
 - **-h, --help** - Output usage information
 - **-v, --version** - Output the version number
+
+## Examples
+
+Run test on the "test.html" page:
+
+```
+$ mocha-headless-chrome -f test.html
+```
+
+Output test result using "nyan" reporter:
+
+```
+$ mocha-headless-chrome -f test.html -r nyan
+```
+
+Pass the Chrome arguments:
+
+```
+$ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
+```
