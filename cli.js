@@ -24,4 +24,4 @@ if (cfg.help) {
     args.showHelp();
 }
 
-runner(cfg);
+runner(cfg).then(obj => obj !== undefined && console.log(typeof obj === 'string' ? obj : JSON.stringify(obj)));

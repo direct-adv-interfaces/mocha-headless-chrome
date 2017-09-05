@@ -50,6 +50,10 @@ function initMocha(reporter) {
     });
 }
 
+function getResult(field) {
+    return window[field];
+}
+
 function configureViewport(width, height, page) {
     if (!width && !height) return page;
 
@@ -75,14 +79,22 @@ function onError(err) {
     process.exit(1);
 }
 
-module.exports = function({ file, reporter, timeout, width, height }) {
+module.exports = function ({ file, reporter, timeout, width, height, result, args }) {
+
+    // validate options
+    !file && onError('ERROR: Test page path is required.');
+    
+    args = [].concat(args || []).map(arg => '--' + arg);
+    
     const url = path.resolve(file);
+
     const options = {
         ignoreHTTPSErrors: true,
-        headless: true
+        headless: true,
+        args
     };
 
-    puppeteer
+    return puppeteer
         .launch(options)
         .then(browser => browser.newPage()
             .then(configureViewport.bind(this, width, height))
@@ -94,9 +106,10 @@ module.exports = function({ file, reporter, timeout, width, height }) {
                 return page.evaluateOnNewDocument(initMocha, reporter)
                     .then(() => page.goto(`file://${url}`))
                     .then(() => page.waitForFunction(() => window.testsCompleted, { timeout: timeout }))
-                    .then(() => {
-                        process.stdout.write('\n');
+                    .then(() => page.evaluate(getResult, result))
+                    .then(obj => {
                         browser.close();
+                        return obj;
                     });
             }))
         .catch(onError);

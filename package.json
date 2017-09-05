@@ -17,6 +17,7 @@
   "keywords": [
     "mocha",
     "tests",
+    "puppeteer",
     "headless-chrome"
   ],
   "author": "dima117a@gmail.com",
