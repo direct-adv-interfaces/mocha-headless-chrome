@@ -13,7 +13,7 @@ Node 6.4.0+ is supported.
 
 ## Getting Started
 
-First you'll need to install [mocha-headless-chrome](https://www.npmjs.com/package/mocha-headless-chrome):
+First you need to install [mocha-headless-chrome](https://www.npmjs.com/package/mocha-headless-chrome):
 
 ```
 npm i mocha-headless-chrome
@@ -21,7 +21,7 @@ npm i mocha-headless-chrome
 
 Then prepare the test page (see [the example](example-page.html)). 
 
-*Note. It is necessary to add the **<meta charset="utf-8">** tag. Otherwise browser may use another encoding and test results will be shown incorrectly.*
+*Note. It is necessary to add the **&lt;meta charset="utf-8">** tag. Otherwise browser may use another encoding and test results will be shown incorrectly.*
 
 Then run the CLI and specify your test page path using **-f** parameter.
 
@@ -49,7 +49,7 @@ Run test on the "test.html" page:
 $ mocha-headless-chrome -f test.html
 ```
 
-Output test result using "nyan" reporter:
+Output test results using "nyan" reporter:
 
 ```
 $ mocha-headless-chrome -f test.html -r nyan
