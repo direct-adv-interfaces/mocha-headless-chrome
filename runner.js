@@ -20,12 +20,20 @@ function initMocha(reporter) {
         m.run = () => {
             const all = [], pending = [], failures = [], passes = [];
 
+            function error(err) {
+                if (!err) return null;
+
+                let res = {};
+                Object.getOwnPropertyNames(err).forEach(key => res[key] = err[key]);
+                return res;
+            }
+
             function clean(test) {
                 return {
                     title: test.title,
                     fullTitle: test.fullTitle(),
                     duration: test.duration,
-                    err: test.err
+                    err: error(test.err)
                 };
             }
             
