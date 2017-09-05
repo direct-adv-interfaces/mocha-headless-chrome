@@ -33,7 +33,6 @@ mocha-headless-chrome -f test-page.html
 
 - **-f, --file** - Path to the page which contains tests (required)
 - **-r, --reporter** - Mocha reporter name (defaults to "spec")
-- **-R, --result** - Name of the global variable which used as result of the tests
 - **-a, --args**  Chrome arguments ('--' prefix will be added)
 - **-w, --width** - Viewport width
 - **-H, --height** - Viewport height

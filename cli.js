@@ -6,7 +6,6 @@ const runner = require('./runner');
 args.option('file', 'Path to the page which contains tests (required)')
     .option('args', 'Chrome arguments (\'--\' prefix will be added)')
     .option('reporter', 'Mocha reporter name', undefined, String)
-    .option('result', 'Name of the global variable which used as result of the tests', undefined, String)
     .option('timeout', 'Timeout in ms (defaults to 60000)', undefined, parseInt)
     .option('help', 'Output usage information', undefined, Boolean)
     .option('width', 'Viewport width', undefined, parseInt)
@@ -24,4 +23,4 @@ if (cfg.help) {
     args.showHelp();
 }
 
-runner(cfg).then(obj => obj !== undefined && console.log(typeof obj === 'string' ? obj : JSON.stringify(obj)));
+runner(cfg).then(obj => console.log(JSON.stringify(obj)));

@@ -15,8 +15,44 @@ function initMocha(reporter) {
 
         m.setup({ reporter: Mocha.reporters[reporter] || Mocha.reporters.dot });
 
-        let run = m.run.bind(m);
-        m.run = () => run().on('end', () => window.testsCompleted = true);
+        const run = m.run.bind(m);
+
+        m.run = () => {
+            const all = [], pending = [], failures = [], passes = [];
+
+            function clean(test) {
+                return {
+                    title: test.title,
+                    fullTitle: test.fullTitle(),
+                    duration: test.duration,
+                    err: test.err
+                };
+            }
+            
+            function result() {
+                return {
+                    result: {
+                        stats: {
+                            tests: all.length,
+                            passes: passes.length,
+                            pending: pending.length,
+                            failures: failures.length
+                        },
+                        tests: all.map(clean),
+                        pending: pending.map(clean),
+                        failures: failures.map(clean),
+                        passes: passes.map(clean)
+                    },
+                    coverage: window.__coverage__
+                };
+            }
+
+            return run()
+                .on('pass', test => { passes.push(test); all.push(test); })
+                .on('fail', test => { failures.push(test); all.push(test); })
+                .on('pending', test => { pending.push(test); all.push(test); })
+                .on('end', () => { window.__mochaResult__ = result(); });
+        };
     }
 
     function shimMochaProcess(M) {
@@ -24,7 +60,6 @@ function initMocha(reporter) {
         !M.process && (M.process = {});
         !M.process.stdout && (M.process.stdout = {});
 
-        M.process.browser = false;
         M.process.stdout.write = data => console.log('stdout:', data);
         M.reporters.Base.useColors = true;
     }
@@ -48,10 +83,6 @@ function initMocha(reporter) {
         },
         configurable: true
     });
-}
-
-function getResult(field) {
-    return window[field];
 }
 
 function configureViewport(width, height, page) {
@@ -79,7 +110,7 @@ function onError(err) {
     process.exit(1);
 }
 
-module.exports = function ({ file, reporter, timeout, width, height, result, args }) {
+module.exports = function ({ file, reporter, timeout, width, height, args }) {
 
     // validate options
     !file && onError('ERROR: Test page path is required.');
@@ -105,8 +136,8 @@ module.exports = function ({ file, reporter, timeout, width, height, result, arg
 
                 return page.evaluateOnNewDocument(initMocha, reporter)
                     .then(() => page.goto(`file://${url}`))
-                    .then(() => page.waitForFunction(() => window.testsCompleted, { timeout: timeout }))
-                    .then(() => page.evaluate(getResult, result))
+                    .then(() => page.waitForFunction(() => window.__mochaResult__, { timeout: timeout }))
+                    .then(() => page.evaluate(() => window.__mochaResult__))
                     .then(obj => {
                         browser.close();
                         return obj;
