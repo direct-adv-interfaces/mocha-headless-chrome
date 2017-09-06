@@ -37,14 +37,17 @@ function initMocha(reporter) {
                 };
             }
             
-            function result() {
+            function result(stats) {
                 return {
                     result: {
                         stats: {
                             tests: all.length,
                             passes: passes.length,
                             pending: pending.length,
-                            failures: failures.length
+                            failures: failures.length,
+                            start: stats.start.toISOString(),
+                            end: stats.end.toISOString(),
+                            duration: stats.duration
                         },
                         tests: all.map(clean),
                         pending: pending.map(clean),
@@ -59,7 +62,7 @@ function initMocha(reporter) {
                 .on('pass', test => { passes.push(test); all.push(test); })
                 .on('fail', test => { failures.push(test); all.push(test); })
                 .on('pending', test => { pending.push(test); all.push(test); })
-                .on('end', () => { window.__mochaResult__ = result(); });
+                .on('end', function() { window.__mochaResult__ = result(this.stats); });
         };
     }
 
