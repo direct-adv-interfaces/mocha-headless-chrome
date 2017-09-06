@@ -70,13 +70,16 @@ function initMocha(reporter) {
 
         M.process.stdout.write = data => console.log('stdout:', data);
         M.reporters.Base.useColors = true;
+        M.reporters.none = function None(runner) {
+            M.reporters.Base.call(this, runner);
+        };
     }
 
     Object.defineProperty(window, 'mocha', {
         get: function() { return undefined },
         set: function(m) {
-            shimMochaInstance(m)
-            delete window.mocha
+            shimMochaInstance(m);
+            delete window.mocha;
             window.mocha = m
         },
         configurable: true
@@ -85,9 +88,9 @@ function initMocha(reporter) {
     Object.defineProperty(window, 'Mocha', {
         get: function() { return undefined },
         set: function(m) {
+            shimMochaProcess(m);
             delete window.Mocha;
             window.Mocha = m;
-            shimMochaProcess(m)
         },
         configurable: true
     });
