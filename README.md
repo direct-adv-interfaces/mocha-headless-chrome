@@ -7,8 +7,6 @@
 
 This is the tool which runs client-side [mocha](https://github.com/mochajs/mocha) tests in the command line through headless Chrome ([puppeteer](https://github.com/GoogleChrome/puppeteer) is used).
 
-All mocha reporters are supported (including third-party reporters).
-
 Node 6.4.0+ is supported.
 
 ## Getting Started
@@ -60,6 +58,15 @@ Pass the Chrome **--no-sandbox** and **--disable-setuid-sandbox** arguments:
 ```
 $ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
 ```
+
+## Mocha reporters
+
+All mocha reporters are supported. Specify the reporter name through **-r** parameter. All reporter output (include cursor manipulations) will be redirected to stdout as like it works in console.  
+
+For usage of third-party reporter just include it's code to the page by **&lt;script>** tag and specify it's name in the **-r** parameter. 
+
+Also special reporter named **"none""** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).   
+
 
 ## Programmatically usage
 
