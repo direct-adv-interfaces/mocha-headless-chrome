@@ -58,11 +58,21 @@ function initMocha(reporter) {
                 };
             }
 
-            return run()
+            function setResult() {
+                window.__mochaResult__ = result(this.stats);
+            }
+
+            const runner = run()
                 .on('pass', test => { passes.push(test); all.push(test); })
                 .on('fail', test => { failures.push(test); all.push(test); })
                 .on('pending', test => { pending.push(test); all.push(test); })
-                .on('end', function() { window.__mochaResult__ = result(this.stats); });
+                .on('end', setResult);
+
+            if (!m.suite.total()) {
+                setResult.call(runner);
+            }
+
+            return runner;
         };
     }
 
