@@ -21,7 +21,7 @@ function initMocha(reporter) {
             const all = [], pending = [], failures = [], passes = [];
 
             function error(err) {
-                if (!err) return null;
+                if (!err) return {};
 
                 let res = {};
                 Object.getOwnPropertyNames(err).forEach(key => res[key] = err[key]);
