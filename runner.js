@@ -134,7 +134,7 @@ function onError(err) {
     process.exit(1);
 }
 
-module.exports = function ({ file, reporter, timeout, width, height, args }) {
+module.exports = function ({ file, reporter, timeout, width, height, args, executablePath }) {
     return new Promise(resolve => {
 
         // validate options
@@ -150,6 +150,7 @@ module.exports = function ({ file, reporter, timeout, width, height, args }) {
         const options = {
             ignoreHTTPSErrors: true,
             headless: true,
+            executablePath,
             args
         };
 
