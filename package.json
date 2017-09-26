@@ -28,7 +28,7 @@
   "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
   "dependencies": {
     "args": "^3.0.4",
-    "puppeteer": "^0.10.1"
+    "puppeteer": "^0.11.0"
   },
   "devDependencies": {
     "chai": "^4.1.1",
