@@ -27,8 +27,14 @@ if (cfg.help) {
 }
 
 runner(cfg)
-    .then(obj => cfg.out && fs.writeFileSync(cfg.out, JSON.stringify(obj)))
+    .then(obj => {
+        cfg.out && fs.writeFileSync(cfg.out, JSON.stringify(obj));
+
+        if (obj.result.stats.failures) {
+            throw Error('Tests fails');
+        }
+    })
     .catch(err => {
         console.error(err);
         process.exit(1);
-    })
+    });
