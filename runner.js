@@ -62,7 +62,7 @@ function initMocha(reporter) {
                 window.__mochaResult__ = result(this.stats);
             }
 
-            var runner = runner = run(() => setTimeout(() => setResult.call(runner), 0))
+            const runner = run(() => setTimeout(() => setResult.call(runner), 0))
                 .on('pass', test => { passes.push(test); all.push(test); })
                 .on('fail', test => { failures.push(test); all.push(test); })
                 .on('pending', test => { pending.push(test); all.push(test); });

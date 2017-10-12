@@ -31,7 +31,7 @@ runner(cfg)
         cfg.out && fs.writeFileSync(cfg.out, JSON.stringify(obj));
 
         if (obj.result.stats.failures) {
-            throw Error('Tests fails');
+            throw 'Tests fails';
         }
     })
     .catch(err => {
