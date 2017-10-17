@@ -114,19 +114,17 @@ function configureViewport(width, height, page) {
     return page.setViewport(viewport).then(() => page);
 }
 
-function handleConsole(...args) {
-    // process stdout stub
-    let isStdout = args[0] === 'stdout:';
-    isStdout && (args = args.slice(1));
-
-    let msg = util.format(...args);
-    !isStdout && (msg += '\n');
-    process.stdout.write(msg);
-}
-
-function onError(err) {
-    console.error(err);
-    process.exit(1);
+function handleConsole({ args }) {
+    Promise.all(args.map(a => a.jsonValue()))
+        .then(args => {
+            // process stdout stub
+            let isStdout = args[0] === 'stdout:';
+            isStdout && (args = args.slice(1));
+            //
+            let msg = util.format(...args);
+            !isStdout && (msg += '\n');
+            process.stdout.write(msg);
+        });
 }
 
 module.exports = function ({ file, reporter, timeout, width, height, args, executablePath }) {

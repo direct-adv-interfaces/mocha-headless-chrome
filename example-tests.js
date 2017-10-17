@@ -9,7 +9,7 @@ function getRandomInt(min, max) {
 function delay() {
     let a = [];
     let rnd = getRandomInt(5, 11) * 1000000;
-    
+
     for (let x = 0; x < rnd; x++) { a.push(x); }
 }
 
@@ -28,7 +28,7 @@ describe('Array', function() {
 
     describe('#indexOf()', function() {
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 25; i++) {
             if (i % 5 === 4) {
                 it(`(${i}) should fail`, function() {
                     delay();

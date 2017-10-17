@@ -8,7 +8,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "node cli -f example-page.html -o result.json"
+    "start": "node cli -f example-page.html -o result.json -w 801 -H 501 -r nyan"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
   "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
   "dependencies": {
     "args": "^3.0.7",
-    "puppeteer": "^0.11.0"
+    "puppeteer": "^0.12.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
