@@ -29,7 +29,7 @@ mocha-headless-chrome -f test-page.html
 
 ## Options
 
-- **-f, --file** - Path to the page which contains tests (required)
+- **-f, --file** - Path or URL of the page which contains tests (required)
 - **-r, --reporter** - Mocha reporter name (defaults to "spec")
 - **-o, --out** - Path to the file where test result will be saved
 - **-e, --executablePath** - Chrome executable path
@@ -46,6 +46,12 @@ Run test on the "test.html" page:
 
 ```
 $ mocha-headless-chrome -f test.html
+```
+
+Run tests on the remote page:
+
+```
+$ mocha-headless-chrome -f http://localhost:8080
 ```
 
 Output test results using "nyan" reporter:

@@ -127,6 +127,17 @@ function handleConsole({ args }) {
         });
 }
 
+function prepareUrl(filePath) {
+    if (/^[a-zA-Z]+:\/\//.test(filePath)) {
+        // path is URL
+        return filePath;
+    }
+
+    // local path
+    let resolvedPath = path.resolve(filePath);
+    return `file://${resolvedPath}`;
+}
+
 module.exports = function ({ file, reporter, timeout, width, height, args, executablePath }) {
     return new Promise(resolve => {
 
@@ -138,7 +149,7 @@ module.exports = function ({ file, reporter, timeout, width, height, args, execu
         args = [].concat(args || []).map(arg => '--' + arg);
         !timeout && (timeout = 60000);
 
-        const url = path.resolve(file);
+        const url = prepareUrl(file);
 
         const options = {
             ignoreHTTPSErrors: true,
@@ -157,7 +168,7 @@ module.exports = function ({ file, reporter, timeout, width, height, args, execu
                     page.on('pageerror', err => console.error(err));
 
                     return page.evaluateOnNewDocument(initMocha, reporter)
-                        .then(() => page.goto(`file://${url}`))
+                        .then(() => page.goto(url))
                         .then(() => page.waitForFunction(() => window.__mochaResult__, { timeout: timeout }))
                         .then(() => page.evaluate(() => window.__mochaResult__))
                         .then(obj => {
