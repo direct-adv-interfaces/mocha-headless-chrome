@@ -59,13 +59,14 @@ function initMocha(reporter) {
             }
 
             function setResult() {
-                window.__mochaResult__ = result(this.stats);
+                !window.__mochaResult__ && (window.__mochaResult__ = result(this.stats));
             }
 
             const runner = run(() => setTimeout(() => setResult.call(runner), 0))
                 .on('pass', test => { passes.push(test); all.push(test); })
                 .on('fail', test => { failures.push(test); all.push(test); })
-                .on('pending', test => { pending.push(test); all.push(test); });
+                .on('pending', test => { pending.push(test); all.push(test); })
+                .on('end', setResult);
 
             return runner;
         };
