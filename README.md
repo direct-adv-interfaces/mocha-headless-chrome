@@ -33,12 +33,12 @@ mocha-headless-chrome -f test-page.html
 - **-r, --reporter** - Mocha reporter name (defaults to "spec")
 - **-o, --out** - Path to the file where test result will be saved
 - **-e, --executablePath** - Chrome executable path
-- **-a, --args**  Chrome arguments ('--' prefix will be added)
+- **-v, --visible** - Show Chrome window
+- **-a, --args** - Chrome arguments ('--' prefix will be added)
 - **-w, --width** - Viewport width
 - **-H, --height** - Viewport height
 - **-t, --timeout** - Timeout in ms (defaults to 60000)
 - **-h, --help** - Output usage information
-- **-v, --version** - Output the version number
 
 ## Examples
 

@@ -138,7 +138,7 @@ function prepareUrl(filePath) {
     return `file://${resolvedPath}`;
 }
 
-module.exports = function ({ file, reporter, timeout, width, height, args, executablePath }) {
+module.exports = function ({ file, reporter, timeout, width, height, args, executablePath, visible }) {
     return new Promise(resolve => {
 
         // validate options
@@ -153,7 +153,7 @@ module.exports = function ({ file, reporter, timeout, width, height, args, execu
 
         const options = {
             ignoreHTTPSErrors: true,
-            headless: true,
+            headless: !visible,
             executablePath,
             args
         };

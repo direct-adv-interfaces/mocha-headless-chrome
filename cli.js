@@ -13,6 +13,7 @@ args.option('file', 'Path to the page which contains tests (required)')
     .option('width', 'Viewport width', undefined, parseInt)
     .option('height', 'Viewport height', undefined, parseInt)
     .option('executablePath', 'Chrome executable path', undefined, String)
+    .option('visible', 'Show Chrome window', undefined, Boolean)
     .example('mocha-headless-chrome -f test.html', 'Run tests on the "test.html" page')
     .example('mocha-headless-chrome -f http://localhost:8080', 'Run tests on the remote page')
     .example('mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox', 'Pass the Chrome arguments')
@@ -20,6 +21,7 @@ args.option('file', 'Path to the page which contains tests (required)')
 
 let cfg = args.parse(process.argv, {
     name: 'mocha-headless-chrome',
+    version: false,
     help: false
 });
 
