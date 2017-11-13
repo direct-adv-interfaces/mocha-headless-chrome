@@ -89,6 +89,7 @@ const options = {
     height: 600,                                 // viewport height
     timeout: 120000,                             // timeout in ms
     executablePath: '/usr/bin/chrome-unstable',  // chrome executable path
+    visible: true,                               // show chrome window
     args: ['no-sandbox']                         // chrome arguments
 };
 
