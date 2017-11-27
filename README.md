@@ -72,7 +72,7 @@ All mocha reporters are supported. Specify the reporter name through **-r** para
 
 For usage of third-party reporter just include it's code to the page by **&lt;script>** tag and specify it's name in the **-r** parameter. 
 
-Also special reporter named **"none""** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).   
+Also special reporter named **"none"** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).   
 
 
 ## Programmatically usage
