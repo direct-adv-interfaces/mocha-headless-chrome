@@ -22,6 +22,7 @@
   ],
   "author": "dima117a@gmail.com",
   "license": "MIT",
+  "types": "./runner.d.ts",
   "bugs": {
     "url": "https://github.com/direct-adv-interfaces/mocha-headless-chrome/issues"
   },
