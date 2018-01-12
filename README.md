@@ -17,7 +17,7 @@ First you need to install [mocha-headless-chrome](https://www.npmjs.com/package/
 npm i mocha-headless-chrome
 ```
 
-Then prepare the test page (see [the example](example-page.html)). 
+Then prepare the test page (see [the example](example-page.html)).
 
 *Note. It is necessary to add the **&lt;meta charset="utf-8">** tag. Otherwise browser may use another encoding and test results will be shown incorrectly.*
 
@@ -32,6 +32,7 @@ mocha-headless-chrome -f test-page.html
 - **-f, --file** - Path or URL of the page which contains tests (required)
 - **-r, --reporter** - Mocha reporter name (defaults to "spec")
 - **-o, --out** - Path to the file where test result will be saved
+- **-c, --coverage** - Path to the file where coverage info will be saved
 - **-e, --executablePath** - Chrome executable path
 - **-v, --visible** - Show Chrome window
 - **-a, --args** - Chrome arguments ('--' prefix will be added)
@@ -68,11 +69,11 @@ $ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
 
 ## Mocha reporters
 
-All mocha reporters are supported. Specify the reporter name through **-r** parameter. All reporter output (include cursor manipulations) will be redirected to stdout as like it works in console.  
+All mocha reporters are supported. Specify the reporter name through **-r** parameter. All reporter output (include cursor manipulations) will be redirected to stdout as like it works in console.
 
-For usage of third-party reporter just include it's code to the page by **&lt;script>** tag and specify it's name in the **-r** parameter. 
+For usage of third-party reporter just include it's code to the page by **&lt;script>** tag and specify it's name in the **-r** parameter.
 
-Also special reporter named **"none"** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).   
+Also special reporter named **"none"** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).
 
 
 ## Programmatically usage
@@ -99,5 +100,5 @@ runner(options)
         console.log(json);
     });
 ```
- 
+
 

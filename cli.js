@@ -8,6 +8,7 @@ args.option('file', 'Path to the page which contains tests (required)')
     .option('args', 'Chrome arguments (\'--\' prefix will be added)')
     .option('reporter', 'Mocha reporter name', undefined, String)
     .option('out', 'Path to the file where test result will be saved', undefined, String)
+    .option('coverage', 'Path to the file where coverage info will be saved', undefined, String)
     .option('timeout', 'Timeout in ms (defaults to 60000)', undefined, parseInt)
     .option('help', 'Output usage information', undefined, Boolean)
     .option('width', 'Viewport width', undefined, parseInt)
@@ -31,7 +32,10 @@ if (cfg.help) {
 
 runner(cfg)
     .then(obj => {
-        cfg.out && fs.writeFileSync(cfg.out, JSON.stringify(obj));
+        const getContent = (obj) => obj ? JSON.stringify(obj) : '';
+
+        cfg.out && fs.writeFileSync(cfg.out, getContent(obj.result));
+        cfg.coverage && fs.writeFileSync(cfg.coverage, getContent(obj.coverage));
 
         if (obj.result.stats.failures) {
             throw 'Tests fails';
