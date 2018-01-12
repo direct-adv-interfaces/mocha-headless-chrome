@@ -8,7 +8,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "node cli -f example-page.html -o result.json -c coverage.json -w 801 -H 501 -r nyan"
+    "test": "node cli -f example-page.html -o result.json -c coverage.json -w 801 -H 501 -r nyan"
   },
   "repository": {
     "type": "git",
