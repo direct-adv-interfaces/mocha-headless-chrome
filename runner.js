@@ -115,7 +115,9 @@ function configureViewport(width, height, page) {
     return page.setViewport(viewport).then(() => page);
 }
 
-function handleConsole({ args }) {
+function handleConsole(msg) {
+    const args = msg._args;
+
     Promise.all(args.map(a => a.jsonValue()))
         .then(args => {
             // process stdout stub
