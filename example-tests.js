@@ -30,10 +30,10 @@ describe('Array', function() {
 
         for (let i = 0; i < 25; i++) {
             if (i % 5 === 4) {
-                it(`(${i}) should fail`, function() {
-                    delay();
-                    assert.equal(3, [1, 2, 3].indexOf(44));
-                });
+//                 it(`(${i}) should fail`, function() {
+//                     delay();
+//                     assert.equal(3, [1, 2, 3].indexOf(44));
+//                 });
             } else {
                 it(`(${i}) should return -1 when the value is not present`, function() {
                     delay();
