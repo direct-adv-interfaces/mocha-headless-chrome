@@ -43,3 +43,9 @@ describe('Array', function() {
         }
     });
 });
+
+describe("ShouldNotBeRun", function () {
+    it("fails if test is run", function () {
+       assert.ok(false, "this test should be excluded by the inverted grep");
+    });
+});

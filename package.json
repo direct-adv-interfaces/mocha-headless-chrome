@@ -8,7 +8,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "node cli -f example-page.html -o result.json -w 801 -H 501 -r nyan"
+    "start": "node cli -f \"example-page.html?grep=^ShouldNotBeRun&invert=true\" -o result.json -w 801 -H 501 -r nyan"
   },
   "repository": {
     "type": "git",
