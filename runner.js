@@ -136,9 +136,13 @@ function prepareUrl(filePath) {
         return filePath;
     }
 
-    // local path
-    let resolvedPath = path.resolve(filePath);
-    return `file://${resolvedPath}`;
+	let parts = filePath.split('?');
+	let basePath = parts.shift();
+	let qs = parts.join('?');
+
+	// local path
+    let resolvedPath = path.resolve(basePath);
+    return `file://${resolvedPath}` + (qs ? '?' + qs : '');
 }
 
 module.exports = function ({ file, reporter, timeout, width, height, args, executablePath, visible }) {
