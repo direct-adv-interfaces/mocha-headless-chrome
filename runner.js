@@ -4,6 +4,7 @@ const path = require('path');
 const util = require('util');
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+const mkdirp = require('mkdirp');
 
 function initMocha(reporter) {
 
@@ -183,6 +184,8 @@ module.exports = function ({ file, reporter, out, timeout, width, height, args, 
                         .then(() => page.evaluate(() => window.__mochaResult__))
                         .then(obj => {
                             browser.close();
+
+                            mkdirp.sync(path.dirname(out));
                             fs.writeFileSync(out, mochaStdOutMsg);
                             return obj;
                         });
