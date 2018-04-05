@@ -119,7 +119,7 @@ function configureViewport(width, height, page) {
 
 let mochaStdOutMsg = '';
 
-function handleConsole(msg, out) {
+function handleConsole(msg) {
     const args = msg._args;
 
     Promise.all(args.map(a => a.jsonValue()))
@@ -174,7 +174,7 @@ module.exports = function ({ file, reporter, out, timeout, width, height, args, 
             .then(browser => browser.newPage()
                 .then(configureViewport.bind(this, width, height))
                 .then(page => {
-                    page.on('console', (msg) => handleConsole(msg, out));
+                    page.on('console', (msg) => handleConsole(msg));
                     page.on('dialog', dialog => dialog.dismiss());
                     page.on('pageerror', err => console.error(err));
 
@@ -185,8 +185,10 @@ module.exports = function ({ file, reporter, out, timeout, width, height, args, 
                         .then(obj => {
                             browser.close();
 
-                            mkdirp.sync(path.dirname(out));
-                            fs.writeFileSync(out, mochaStdOutMsg);
+                            if (out) {
+                              mkdirp.sync(path.dirname(out));
+                              fs.writeFileSync(out, mochaStdOutMsg);
+                            }
                             return obj;
                         });
                 }));
