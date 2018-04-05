@@ -3,6 +3,8 @@
 const path = require('path');
 const util = require('util');
 const puppeteer = require('puppeteer');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
 
 function initMocha(reporter) {
 
@@ -77,7 +79,7 @@ function initMocha(reporter) {
         !M.process && (M.process = {});
         !M.process.stdout && (M.process.stdout = {});
 
-        M.process.stdout.write = data => console.log('stdout:', data);
+        M.process.stdout.write = data => console.log('mochastdout:', data);
         M.reporters.Base.useColors = true;
         M.reporters.none = function None(runner) {
             M.reporters.Base.call(this, runner);
@@ -115,6 +117,8 @@ function configureViewport(width, height, page) {
     return page.setViewport(viewport).then(() => page);
 }
 
+let mochaStdOutMsg = '';
+
 function handleConsole(msg) {
     const args = msg._args;
 
@@ -122,10 +126,14 @@ function handleConsole(msg) {
         .then(args => {
             // process stdout stub
             let isStdout = args[0] === 'stdout:';
-            isStdout && (args = args.slice(1));
-            //
+            let isMochaStdout = args[0] === 'mochastdout:';
+            (isStdout || isMochaStdout) && (args = args.slice(1));
+
             let msg = util.format(...args);
+
             !isStdout && (msg += '\n');
+            isMochaStdout && (mochaStdOutMsg += util.format(...args));
+
             process.stdout.write(msg);
         });
 }
@@ -141,7 +149,7 @@ function prepareUrl(filePath) {
     return `file://${resolvedPath}`;
 }
 
-module.exports = function ({ file, reporter, timeout, width, height, args, executablePath, visible }) {
+module.exports = function ({ file, reporter, out, timeout, width, height, args, executablePath, visible }) {
     return new Promise(resolve => {
 
         // validate options
@@ -166,7 +174,7 @@ module.exports = function ({ file, reporter, timeout, width, height, args, execu
             .then(browser => browser.newPage()
                 .then(configureViewport.bind(this, width, height))
                 .then(page => {
-                    page.on('console', handleConsole);
+                    page.on('console', (msg) => handleConsole(msg));
                     page.on('dialog', dialog => dialog.dismiss());
                     page.on('pageerror', err => console.error(err));
 
@@ -176,6 +184,11 @@ module.exports = function ({ file, reporter, timeout, width, height, args, execu
                         .then(() => page.evaluate(() => window.__mochaResult__))
                         .then(obj => {
                             browser.close();
+
+                            if (out) {
+                              mkdirp.sync(path.dirname(out));
+                              fs.writeFileSync(out, mochaStdOutMsg);
+                            }
                             return obj;
                         });
                 }));
