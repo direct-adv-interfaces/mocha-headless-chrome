@@ -149,7 +149,7 @@ function prepareUrl(filePath) {
     return `file://${resolvedPath}`;
 }
 
-module.exports = function ({ file, reporter, out, timeout, width, height, args, executablePath, visible }) {
+module.exports = function ({ file, reporter, mochaout, timeout, width, height, args, executablePath, visible }) {
     return new Promise(resolve => {
 
         // validate options
@@ -185,9 +185,9 @@ module.exports = function ({ file, reporter, out, timeout, width, height, args, 
                         .then(obj => {
                             browser.close();
 
-                            if (out) {
-                              mkdirp.sync(path.dirname(out));
-                              fs.writeFileSync(out, mochaStdOutMsg);
+                            if (mochaout) {
+                              mkdirp.sync(path.dirname(mochaout));
+                              fs.writeFileSync(mochaout, mochaStdOutMsg);
                             }
                             return obj;
                         });
