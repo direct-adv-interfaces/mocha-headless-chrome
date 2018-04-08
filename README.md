@@ -67,6 +67,14 @@ Pass the Chrome **--no-sandbox** and **--disable-setuid-sandbox** arguments:
 $ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
 ```
 
+Instrument `src/` code with `istanbul`, run tests on it, and coverage the generated `coverage.json` to an HTML report:
+
+```
+$ istanbul src -o instrumented
+$ mocha-headless-chrome -f test.html
+$ istanbul report html
+```
+
 ## Mocha reporters
 
 All mocha reporters are supported. Specify the reporter name through **-r** parameter. All reporter output (include cursor manipulations) will be redirected to stdout as like it works in console.
@@ -74,7 +82,6 @@ All mocha reporters are supported. Specify the reporter name through **-r** para
 For usage of third-party reporter just include it's code to the page by **&lt;script>** tag and specify it's name in the **-r** parameter.
 
 Also special reporter named **"none"** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).
-
 
 ## Programmatically usage
 
