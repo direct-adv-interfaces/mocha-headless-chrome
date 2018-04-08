@@ -1,7 +1,6 @@
 .idea/
-
+.gitignore
 .npmignore
 
-example-page.html
-example-tests.js
+example
 result.json

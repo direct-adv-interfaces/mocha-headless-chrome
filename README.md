@@ -17,7 +17,7 @@ First you need to install [mocha-headless-chrome](https://www.npmjs.com/package/
 npm i mocha-headless-chrome
 ```
 
-Then prepare the test page (see [the example](example-page.html)).
+Then prepare the test page (see [the example](example/example-page.html)).
 
 *Note. It is necessary to add the **&lt;meta charset="utf-8">** tag. Otherwise browser may use another encoding and test results will be shown incorrectly.*
 

@@ -2,13 +2,14 @@
   "name": "mocha-headless-chrome",
   "version": "1.8.3",
   "description": "Run client-side mocha tests in the command line through headless Chrome",
-  "main": "runner.js",
+  "main": "./lib/runner.js",
+  "typings": "./lib/runner.d.ts",
   "bin": "./bin/start",
   "engines": {
     "node": ">=6.4.0"
   },
   "scripts": {
-    "start": "node cli -f example-page.html -o result.json -w 801 -H 501 -r nyan"
+    "start": "node lib/cli -f ./example/example-page.html -o ./result/result.json -c ./result/coverage.json -w 801 -H 501 -r nyan"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
   "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
   "dependencies": {
     "args": "^3.0.7",
+    "mkdirp": "^0.5.1",
     "puppeteer": "^1.2.0"
   },
   "devDependencies": {
