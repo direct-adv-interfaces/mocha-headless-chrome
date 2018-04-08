@@ -75,6 +75,26 @@ For usage of third-party reporter just include it's code to the page by **&lt;sc
 
 Also special reporter named **"none"** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).
 
+## Request mocking
+
+There is now an `addMockResponse` function exposed on window that takes a pattern
+and a response.
+
+```javascript
+it('can intercept requests', (done) => {
+  window.addMockResponse("localhost", {
+    status: 200,
+    body: "this is mocked"
+  });
+  fetch('http://localhost:3000/foo')
+    .then((response) => response.text())
+    .then((text) => {
+      expect(text).to.equal("this is mocked");
+    })
+    .then(done());
+
+});
+```
 
 ## Programmatically usage
 
@@ -100,5 +120,3 @@ runner(options)
         console.log(json);
     });
 ```
-
-

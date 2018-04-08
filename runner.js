@@ -141,6 +141,25 @@ function prepareUrl(filePath) {
     return `file://${resolvedPath}`;
 }
 
+const requestMap = {};
+
+const addMockResponse = (pattern, body) => {
+  requestMap[pattern] = body;
+}
+
+function handleRequest(request) {
+  Object.keys(requestMap).forEach((key) => {
+    if (request.url().match(new RegExp(key))) {
+      const response = requestMap[key];
+      const corsHeader = {
+        'Access-Control-Allow-Origin': '*'
+      };
+      response.headers = Object.assign(response.headers || {}, corsHeader);
+      request.respond(response);
+    }
+  });
+}
+
 module.exports = function ({ file, reporter, timeout, width, height, args, executablePath, visible }) {
     return new Promise(resolve => {
 
@@ -170,8 +189,14 @@ module.exports = function ({ file, reporter, timeout, width, height, args, execu
                     page.on('dialog', dialog => dialog.dismiss());
                     page.on('pageerror', err => console.error(err));
 
+                    page.exposeFunction("addMockResponse", addMockResponse);
+
                     return page.evaluateOnNewDocument(initMocha, reporter)
                         .then(() => page.goto(url))
+                        .then(() => {
+                          page.setRequestInterception(true);
+                          page.on('request', handleRequest);
+                        })
                         .then(() => page.waitForFunction(() => window.__mochaResult__, { timeout: timeout }))
                         .then(() => page.evaluate(() => window.__mochaResult__))
                         .then(obj => {
