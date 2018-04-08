@@ -70,7 +70,7 @@ $ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
 Instrument `src/` code with `istanbul`, run tests on it, and coverage the generated `coverage.json` to an HTML report:
 
 ```
-$ istanbul src -o instrumented
+$ istanbul instrument src -o instrumented
 $ mocha-headless-chrome -f test.html
 $ istanbul report html
 ```
