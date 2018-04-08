@@ -150,13 +150,12 @@ const addMockResponse = (pattern, body) => {
 function handleRequest(request) {
   Object.keys(requestMap).forEach((key) => {
     if (request.url().match(new RegExp(key))) {
-      request.respond({
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
-        status: 200,
-        body: requestMap[key]
-      });
+      const response = requestMap[key];
+      const corsHeader = {
+        'Access-Control-Allow-Origin': '*'
+      };
+      response.headers = Object.assign(response.headers || {}, corsHeader);
+      request.respond(response);
     }
   });
 }
