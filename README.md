@@ -83,6 +83,7 @@ For usage of third-party reporter just include it's code to the page by **&lt;sc
 
 Also special reporter named **"none"** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).
 
+
 ## Programmatically usage
 
 You can use mocha-headless-chrome programmatically. Just require the *mocha-headless-chrome* node module and pass proper parameters into it. Function result is a Promise.
