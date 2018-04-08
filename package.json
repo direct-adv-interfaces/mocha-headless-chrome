@@ -1,6 +1,6 @@
 {
   "name": "mocha-headless-chrome",
-  "version": "1.9.0",
+  "version": "1.8.3",
   "description": "Run client-side mocha tests in the command line through headless Chrome",
   "main": "runner.js",
   "bin": "./bin/start",
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
   "dependencies": {
     "args": "^3.0.7",
-    "puppeteer": "^1.0.0"
+    "puppeteer": "^1.2.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
