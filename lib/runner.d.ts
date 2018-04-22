@@ -160,6 +160,5 @@ interface ResultStats {
  *
  * @returns A Promise for the test results.
  */
-declare function runner(options: Options): Promise<Run>;
+export declare function runner(options: Options): Promise<Run>;
 
-export = runner;

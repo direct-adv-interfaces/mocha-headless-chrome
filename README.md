@@ -81,7 +81,7 @@ Also special reporter named **"none"** is available which does not output anythi
 You can use mocha-headless-chrome programmatically. Just require the *mocha-headless-chrome* node module and pass proper parameters into it. Function result is a Promise.
 
 ```js
-const runner = require('mocha-headless-chrome');
+const {runner} = require('mocha-headless-chrome');
 
 const options = {
     file: 'test.html',                           // test page path
@@ -101,4 +101,5 @@ runner(options)
     });
 ```
 
+See also the [TypeScript example](./example/example.ts).
 

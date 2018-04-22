@@ -58,4 +58,5 @@ typings/
 .env
 .idea
 result
+example/example.js
 
