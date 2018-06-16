@@ -38,6 +38,11 @@ interface Options {
     timeout?: number;
 
     /**
+     * Whether to run the test suite in incognito mode.
+     */
+    incognito?: boolean;
+
+    /**
      * Whether to show the Chrome window.
      */
     visible?: boolean;
