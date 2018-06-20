@@ -34,6 +34,7 @@ mocha-headless-chrome -f test-page.html
 - **-o, --out** - Path to the file where test result will be saved
 - **-c, --coverage** - Path to the file where coverage info will be saved
 - **-e, --executablePath** - Chrome executable path
+- **-n, --incognito** - Run test suite in incognito mode
 - **-v, --visible** - Show Chrome window
 - **-a, --args** - Chrome arguments ('--' prefix will be added)
 - **-w, --width** - Viewport width
@@ -90,6 +91,7 @@ const options = {
     height: 600,                                 // viewport height
     timeout: 120000,                             // timeout in ms
     executablePath: '/usr/bin/chrome-unstable',  // chrome executable path
+    incognito: false,                            // incognito mode
     visible: true,                               // show chrome window
     args: ['no-sandbox']                         // chrome arguments
 };
