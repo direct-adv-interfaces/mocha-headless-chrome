@@ -10,3 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Update [args](https://www.npmjs.com/package/args) & [puppeteer](https://www.npmjs.com/package/puppeteer) packages.
+
+### Fixed
+
+- issue [#29](https://github.com/direct-adv-interfaces/mocha-headless-chrome/issues/29): Reporter option is ignored

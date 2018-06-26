@@ -9,7 +9,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "test": "node lib/cli -f ./example/example-page.html -o ./result/result.json -c ./result/coverage.json -w 801 -H 501 -r nyan",
+    "test": "node lib/cli -f ./example/example-page.html -o ./result/result.json -c ./result/coverage.json -w 801 -H 501 -r teamcity",
     "ts": "tsc ./example/example.ts && node ./example/example.js"
   },
   "repository": {
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.0.0"
+    "mocha": "^5.0.0",
+    "mocha-teamcity-reporter": "^2.4.0"
   }
 }
