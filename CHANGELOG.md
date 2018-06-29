@@ -14,3 +14,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 
 - issue [#29](https://github.com/direct-adv-interfaces/mocha-headless-chrome/issues/29): Reporter option is ignored
+- issue [#31](https://github.com/direct-adv-interfaces/mocha-headless-chrome/issues/31): `--incognito` option is ignored
