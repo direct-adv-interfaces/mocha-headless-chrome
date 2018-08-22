@@ -91,6 +91,7 @@ const options = {
     timeout: 120000,                             // timeout in ms
     executablePath: '/usr/bin/chrome-unstable',  // chrome executable path
     visible: true,                               // show chrome window
+    coverage: 'coverage.json',                   // File path to save coverage data 
     args: ['no-sandbox']                         // chrome arguments
 };
 

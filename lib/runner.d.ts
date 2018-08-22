@@ -41,6 +41,11 @@ interface Options {
      * Whether to show the Chrome window.
      */
     visible?: boolean;
+
+    /**
+     * Path to the file where coverage info will be saved
+     */
+    coverage?: string;
 }
 
 /**
