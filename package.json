@@ -9,7 +9,7 @@
     "node": ">=6.4.0"
   },
   "scripts": {
-    "test": "node lib/cli -f ./example/example-page.html -o ./result/result.json -c ./result/coverage.json -w 801 -H 501 -a incognito -v",
+    "test": "node lib/cli -f ./example/example-page.html -o ./result/result.json -c ./result/coverage.json -w 801 -H 501 -a incognito",
     "ts": "tsc ./example/example.ts && node ./example/example.js"
   },
   "repository": {
@@ -32,7 +32,7 @@
   "dependencies": {
     "args": "^5.0.0",
     "mkdirp": "^0.5.1",
-    "puppeteer": "1.5.0"
+    "puppeteer": "1.12.2"
   },
   "devDependencies": {
     "chai": "^4.1.2",
