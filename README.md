@@ -78,6 +78,8 @@ file(s), which you'll need to modify your HTML file to use.
 Here, we show how to do this with [nyc](https://github.com/istanbuljs/nyc).
 
 ```bash
+# Install nyc
+$ npm install -g nyc
 # Produce an instrumented version of your source code
 $ nyc instrument example/example-tests.js > example/example-tests.instrumented.js
 
