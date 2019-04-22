@@ -67,21 +67,43 @@ Pass the Chrome **--no-sandbox** and **--disable-setuid-sandbox** arguments:
 $ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
 ```
 
-Instrument `src/` code with `istanbul`, run tests on it, and coverage the generated `coverage.json` to an HTML report:
+### Computing and reporting test coverage
 
-_First, instrument your `.js` files with `istanbul`, then create a test HTML file pointing to the instrumented equivalents:_
+In order to get information from the **-c** option of mocha-headless-chrome,
+you'll need to first
+[instrument](https://en.wikipedia.org/wiki/Instrumentation_(computer_programming))
+your source code. This will produce modified versions of your source code
+file(s), which you'll need to modify your HTML file to use.
+
+Here, we show how to do this with [nyc](https://github.com/istanbuljs/nyc).
 
 ```
-istanbul instrument src -o instrumented
-sed "s/.js/.instrumented.js/" test.html > test.instrumented.html
+# Produce an instrumented version of your source code
+$ nyc instrument example/example-tests.js > example/example-tests.instrumented.js
+
+# Modify the HTML file to point to the instrumented version
+$ sed "s/example-tests.js/example-tests.instrumented.js/" example/example-page.html > example/example-page.instrumented.html
 ```
 
-_Run `mocha-headless-chrome` with `-c`/`--coverage` on the instrumented tests:_
+Now, we can run `mocha-headless-chrome` with **-c** using the instrumented code:
 
 ```
-$ mocha-headless-chrome -c coverage.json -f test.instrumented.html
-$ istanbul report html
+$ mocha-headless-chrome -c coverage.json -f example/example-page.instrumented.html
 ```
+
+This produces a `coverage.json` file. If you're using a tool like [Codecov](http://codecov.io/), it should be able to detect this file by itself.
+
+We can also generate a human-readable report of the code coverage as follows:
+
+```
+mkdir .nyc_output
+mv coverage.json nyc_output/
+nyc report
+```
+
+If you'd like, you can use the `--reporter` option of `nyc report` to change
+the format of this report (e.g. using `--reporter html` will generate a HTML
+report in the `coverage/` directory).
 
 ## Mocha reporters
 
