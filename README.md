@@ -94,10 +94,11 @@ $ mocha-headless-chrome -c coverage.json -f example/example-page.instrumented.ht
 This produces a `coverage.json` file. If you're using a tool like [Codecov](http://codecov.io/), it should be able to detect this file by itself.
 
 We can also generate a human-readable report of the code coverage as follows:
+(nyc expects coverage information to be in an `.nyc_output/` directory.)
 
 ```bash
 mkdir .nyc_output
-mv coverage.json nyc_output/
+mv coverage.json .nyc_output/
 nyc report
 ```
 
