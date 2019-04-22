@@ -77,7 +77,7 @@ file(s), which you'll need to modify your HTML file to use.
 
 Here, we show how to do this with [nyc](https://github.com/istanbuljs/nyc).
 
-```
+```bash
 # Produce an instrumented version of your source code
 $ nyc instrument example/example-tests.js > example/example-tests.instrumented.js
 
@@ -87,7 +87,7 @@ $ sed "s/example-tests.js/example-tests.instrumented.js/" example/example-page.h
 
 Now, we can run `mocha-headless-chrome` with **-c** using the instrumented code:
 
-```
+```bash
 $ mocha-headless-chrome -c coverage.json -f example/example-page.instrumented.html
 ```
 
@@ -95,7 +95,7 @@ This produces a `coverage.json` file. If you're using a tool like [Codecov](http
 
 We can also generate a human-readable report of the code coverage as follows:
 
-```
+```bash
 mkdir .nyc_output
 mv coverage.json nyc_output/
 nyc report
