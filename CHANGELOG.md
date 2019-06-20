@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [2.0.1] - 2018-06-29
+### Changed
+
+- Update [puppeteer](https://www.npmjs.com/package/puppeteer) package.
+
+## 2.0.1 - 2018-06-29
 
 ### Changed
 
