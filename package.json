@@ -32,7 +32,7 @@
   "dependencies": {
     "args": "^5.0.0",
     "mkdirp": "^0.5.1",
-    "puppeteer": "1.12.2"
+    "puppeteer": "^1.17.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
