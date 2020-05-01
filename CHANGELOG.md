@@ -7,9 +7,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## 3.0.0 - 2020-05-01
+
+### Added
+
+- issue [#39](https://github.com/direct-adv-interfaces/mocha-headless-chrome/issues/39): Added `polling` parameter that can specify puppeteer polling mechanism.
+
 ### Changed
 
-- Update [puppeteer](https://www.npmjs.com/package/puppeteer) package.
+- issue [#44](https://github.com/direct-adv-interfaces/mocha-headless-chrome/issues/44): Empty messages are ignored when output to the console.
+
+### Fixed
+
+- PR [#50](https://github.com/direct-adv-interfaces/mocha-headless-chrome/pull/50): Fix the error when console output arguments is not serializable.
+
+### BREAKING CHANGES
+
+- Update [puppeteer](https://www.npmjs.com/package/puppeteer) package to 3.0.2 version. It means that Node versions before 10.18.1 are not supported.
 
 ## 2.0.1 - 2018-06-29
 

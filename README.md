@@ -7,13 +7,13 @@
 
 This is the tool which runs client-side [mocha](https://github.com/mochajs/mocha) tests in the command line through headless Chrome ([puppeteer](https://github.com/GoogleChrome/puppeteer) is used).
 
-Node 6.4.0+ and Mocha 2.3.0+ are supported.
+Node 10.18.1+ and Mocha 2.3.0+ are supported.
 
 ## Getting Started
 
 First you need to install [mocha-headless-chrome](https://www.npmjs.com/package/mocha-headless-chrome):
 
-```
+```sh
 npm i mocha-headless-chrome
 ```
 
@@ -23,7 +23,7 @@ Then prepare the test page (see [the example](example/example-page.html)).
 
 Then run the CLI and specify your test page path using **-f** parameter.
 
-```
+```sh
 mocha-headless-chrome -f test-page.html
 ```
 
@@ -39,32 +39,33 @@ mocha-headless-chrome -f test-page.html
 - **-w, --width** - Viewport width
 - **-H, --height** - Viewport height
 - **-t, --timeout** - Timeout in ms (defaults to 60000)
+- **-p, --polling** - Puppeteer polling mechanism
 - **-h, --help** - Output usage information
 
 ## Examples
 
 Run test on the "test.html" page:
 
-```
-$ mocha-headless-chrome -f test.html
+```sh
+mocha-headless-chrome -f test.html
 ```
 
 Run tests on the remote page:
 
-```
-$ mocha-headless-chrome -f http://localhost:8080
+```sh
+mocha-headless-chrome -f http://localhost:8080
 ```
 
 Output test results using "nyan" reporter:
 
-```
-$ mocha-headless-chrome -f test.html -r nyan
+```sh
+mocha-headless-chrome -f test.html -r nyan
 ```
 
 Pass the Chrome **--no-sandbox** and **--disable-setuid-sandbox** arguments:
 
-```
-$ mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
+```sh
+mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
 ```
 
 ## Mocha reporters
@@ -74,7 +75,6 @@ All mocha reporters are supported. Specify the reporter name through **-r** para
 For usage of third-party reporter just include it's code to the page by **&lt;script>** tag and specify it's name in the **-r** parameter.
 
 Also special reporter named **"none"** is available which does not output anything. This reporter will be useful when you want to process test result without output to console (for example, when saving data to a file).
-
 
 ## Programmatically usage
 
@@ -102,4 +102,3 @@ runner(options)
 ```
 
 See also the [TypeScript example](./example/example.ts).
-

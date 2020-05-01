@@ -6,11 +6,12 @@
   "typings": "./lib/runner.d.ts",
   "bin": "./bin/start",
   "engines": {
-    "node": ">=6.4.0"
+    "node": ">=10.18.1"
   },
   "scripts": {
     "test": "node lib/cli -f ./example/example-page.html -o ./result/result.json -c ./result/coverage.json -w 801 -H 501 -a incognito",
-    "ts": "tsc ./example/example.ts && node ./example/example.js"
+    "ts": "tsc ./example/example.ts && node ./example/example.js",
+    "help": "node lib/cli -h"
   },
   "repository": {
     "type": "git",
@@ -30,13 +31,13 @@
   },
   "homepage": "https://github.com/direct-adv-interfaces/mocha-headless-chrome#readme",
   "dependencies": {
-    "args": "^5.0.0",
-    "mkdirp": "^0.5.1",
-    "puppeteer": "^1.17.0"
+    "args": "^5.0.1",
+    "mkdirp": "^1.0.4",
+    "puppeteer": "^3.0.2"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.0.0",
-    "mocha-teamcity-reporter": "^2.4.0"
+    "chai": "^4.2.0",
+    "mocha": "^7.1.2",
+    "mocha-teamcity-reporter": "^3.0.0"
   }
 }
