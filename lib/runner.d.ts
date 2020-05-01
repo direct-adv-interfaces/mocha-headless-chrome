@@ -41,6 +41,11 @@ interface Options {
      * Whether to show the Chrome window.
      */
     visible?: boolean;
+    
+    /**
+     * Puppeteer polling mechanism.
+     */
+    polling?: string;
 }
 
 /**
