@@ -6,7 +6,7 @@
   "typings": "./lib/runner.d.ts",
   "bin": "./bin/start",
   "engines": {
-    "node": ">=10.18.1"
+    "node": ">=14.0.0"
   },
   "scripts": {
     "test": "node lib/cli -f ./example/example-page.html -o ./result/result.json -c ./result/coverage.json -w 801 -H 501 -a incognito",
@@ -33,11 +33,11 @@
   "dependencies": {
     "args": "^5.0.1",
     "mkdirp": "^1.0.4",
-    "puppeteer": "^4.0.0"
+    "puppeteer": "^13.1.3"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^8.0.1",
+    "chai": "^4.3.6",
+    "mocha": "^9.2.0",
     "mocha-teamcity-reporter": "^3.0.0"
   }
 }
