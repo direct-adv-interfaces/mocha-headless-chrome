@@ -66,6 +66,47 @@ Pass the Chrome **--no-sandbox** and **--disable-setuid-sandbox** arguments:
 mocha-headless-chrome -f test.html -a no-sandbox -a disable-setuid-sandbox
 ```
 
+### Computing and reporting test coverage
+
+In order to get information from the **-c** option of mocha-headless-chrome,
+you'll need to first
+[instrument](https://en.wikipedia.org/wiki/Instrumentation_(computer_programming))
+your source code. This will produce modified versions of your source code
+file(s), which you'll need to modify your HTML file to use.
+
+Here, we show how to do this with [nyc](https://github.com/istanbuljs/nyc).
+
+```bash
+# Install nyc
+$ npm install -g nyc
+# Produce an instrumented version of your source code
+$ nyc instrument example/example-tests.js > example/example-tests.instrumented.js
+
+# Modify the HTML file to point to the instrumented version
+$ sed "s/example-tests.js/example-tests.instrumented.js/" example/example-page.html > example/example-page.instrumented.html
+```
+
+Now, we can run `mocha-headless-chrome` with **-c** using the instrumented code:
+
+```bash
+$ mocha-headless-chrome -c coverage.json -f example/example-page.instrumented.html
+```
+
+This produces a `coverage.json` file. If you're using a tool like [Codecov](http://codecov.io/), it should be able to detect this file by itself.
+
+We can also generate a human-readable report of the code coverage as follows:
+(nyc expects coverage information to be in an `.nyc_output/` directory.)
+
+```bash
+mkdir .nyc_output
+mv coverage.json .nyc_output/
+nyc report
+```
+
+If you'd like, you can use the `--reporter` option of `nyc report` to change
+the format of this report (e.g. using `--reporter html` will generate a HTML
+report in the `coverage/` directory).
+
 ## Mocha reporters
 
 All mocha reporters are supported. Specify the reporter name through **-r** parameter. All reporter output (include cursor manipulations) will be redirected to stdout as like it works in console.
