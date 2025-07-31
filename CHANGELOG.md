@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 5.1.0
+
+- PR [#68](https://github.com/direct-adv-interfaces/mocha-headless-chrome/pull/68): Update [puppeteer](https://www.npmjs.com/package/puppeteer) package to 24.3.0 version. Node.js 17 is no longer supported.
+
 ## 4.0.0
 
 - PR [#61](https://github.com/direct-adv-interfaces/mocha-headless-chrome/pull/61): Update [puppeteer](https://www.npmjs.com/package/puppeteer) package to 13.1.3 version. Node.js 10 is no longer supported.
