@@ -5,7 +5,7 @@
 
 This is the tool which runs client-side [mocha](https://github.com/mochajs/mocha) tests in the command line through headless Chrome ([puppeteer](https://github.com/GoogleChrome/puppeteer) is used).
 
-Node 14.0.0+ and Mocha 2.3.0+ are supported.
+Node 18.0.0+ and Mocha 2.3.0+ are supported.
 
 ## Getting Started
 
